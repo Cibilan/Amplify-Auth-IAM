@@ -1,0 +1,33 @@
+{
+	"api": {
+		"amplifyGQL": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "AWS_IAM"
+					}
+				}
+			}
+		}
+	},
+	"function": {
+		"testiam": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "amplifyGQL",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+    "permissions": {
+        "api": {
+            "amplifyGQL": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        }
+    }
+}

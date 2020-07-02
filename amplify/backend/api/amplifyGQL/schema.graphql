@@ -1,0 +1,9 @@
+type MyType @model 
+ @auth(rules: [{ allow: public, provider: iam }])
+{
+	id: ID!
+	title: String!
+	content: String!
+	price: Int
+	rating: Float
+}
