@@ -1,0 +1,12 @@
+{
+    "permissions": {
+        "api": {
+            "testGrapql": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        }
+    }
+}

@@ -41,12 +41,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"testIamLambda",
+						"lambdatroggerIAm",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"testIamLambda",
+									"lambdatroggerIAm",
 									"-",
 									{
 										"Ref": "env"
@@ -82,7 +82,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-amplifyauthiam-dev-193455-deployment",
-					"S3Key": "amplify-builds/testIamLambda-312f462b765a74683257-build.zip"
+					"S3Key": "amplify-builds/lambdatroggerIAm-3033462f2f38684c6e6f-build.zip"
 				}
 			}
 		},
@@ -92,12 +92,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"amplifyauthiamLambdaRole20b6038f",
+						"amplifyauthiamLambdaRolec24828e8",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"amplifyauthiamLambdaRole20b6038f",
+									"amplifyauthiamLambdaRolec24828e8",
 									"-",
 									{
 										"Ref": "env"
@@ -219,6 +219,62 @@
 						}
 					]
 				}
+			}
+		},
+		"LambdaTriggerPolicyTodo": {
+			"DependsOn": [
+				"LambdaExecutionRole"
+			],
+			"Type": "AWS::IAM::Policy",
+			"Properties": {
+				"PolicyName": "amplify-lambda-execution-policy-Todo",
+				"Roles": [
+					{
+						"Ref": "LambdaExecutionRole"
+					}
+				],
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"dynamodb:DescribeStream",
+								"dynamodb:GetRecords",
+								"dynamodb:GetShardIterator",
+								"dynamodb:ListStreams"
+							],
+							"Resource": {
+								"Fn::ImportValue": {
+									"Fn::Sub": "${apitestGrapqlGraphQLAPIIdOutput}:GetAtt:TodoTable:StreamArn"
+								}
+							}
+						}
+					]
+				}
+			}
+		},
+		"LambdaEventSourceMappingTodo": {
+			"Type": "AWS::Lambda::EventSourceMapping",
+			"DependsOn": [
+				"LambdaTriggerPolicyTodo",
+				"LambdaExecutionRole"
+			],
+			"Properties": {
+				"BatchSize": 100,
+				"Enabled": true,
+				"EventSourceArn": {
+					"Fn::ImportValue": {
+						"Fn::Sub": "${apitestGrapqlGraphQLAPIIdOutput}:GetAtt:TodoTable:StreamArn"
+					}
+				},
+				"FunctionName": {
+					"Fn::GetAtt": [
+						"LambdaFunction",
+						"Arn"
+					]
+				},
+				"StartingPosition": "LATEST"
 			}
 		}
 	},

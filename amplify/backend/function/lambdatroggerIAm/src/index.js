@@ -17,6 +17,7 @@ const apiKey = 'da2-gia6c7u2mjfironvvvt533q2di';
 exports.handler = async (event) => {
 
     
+console.log(JSON.stringify(event, null, 2));
     const req = new AWS.HttpRequest(appsyncUrl, region);
 
     console.log(AWS.config);
@@ -54,7 +55,7 @@ exports.handler = async (event) => {
         httpRequest.write(req.body);
         httpRequest.end();
     });
-
+    console.log(data);
     return {
         statusCode: 200,
         body: data
