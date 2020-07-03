@@ -1,6 +1,6 @@
 {
 	"api": {
-		"amplifyGQL": {
+		"testGrapql": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
@@ -14,14 +14,14 @@
 		}
 	},
 	"function": {
-		"testiam": {
+		"testIamLambda": {
 			"build": true,
 			"providerPlugin": "awscloudformation",
 			"service": "Lambda",
 			"dependsOn": [
 				{
 					"category": "api",
-					"resourceName": "amplifyGQL",
+					"resourceName": "testGrapql",
 					"attributes": [
 						"GraphQLAPIIdOutput",
 						"GraphQLAPIEndpointOutput"
