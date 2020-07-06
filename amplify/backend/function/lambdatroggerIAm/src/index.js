@@ -8,6 +8,7 @@ Amplify Params - DO NOT EDIT */
 const https = require('https');
 const AWS = require("aws-sdk");
 const urlParse = require("url").URL;
+const axios = require('axios');
 const appsyncUrl = process.env.API_TESTGRAPQL_GRAPHQLAPIENDPOINTOUTPUT;
 const region = process.env.REGION;
 const endpoint = new urlParse(appsyncUrl).hostname.toString();
@@ -42,22 +43,28 @@ console.log(JSON.stringify(event, null, 2));
     } else {
         const signer = new AWS.Signers.V4(req, "appsync", true);
         signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate());
-        console.log(signer);
     }
     console.log(req.headers);
-    const data = await new Promise((resolve, reject) => {
-        const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
-            result.on('data', (data) => {
-                resolve(JSON.parse(data.toString()));
-            });
-        });
+    // const data = await new Promise((resolve, reject) => {
+    //     const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
+    //         result.on('data', (data) => {
+    //             resolve(JSON.parse(data.toString()));
+    //         });
+    //     });
+    //     httpRequest.write(req.body);
+    //     httpRequest.end();
+    // });
 
-        httpRequest.write(req.body);
-        httpRequest.end();
-    });
-    console.log(data);
+       const data = await axios({
+          method: 'post',
+          url: appsyncUrl,
+          data: req.body,
+          headers: req.headers
+      });
+      let list = data.data.data.listTodos.items;
+    console.log(data.data.data.listTodos.items);
     return {
         statusCode: 200,
-        body: data
+        body: list
     };
 };
