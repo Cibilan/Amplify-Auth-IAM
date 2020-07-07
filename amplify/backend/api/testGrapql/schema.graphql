@@ -1,11 +1,11 @@
 type Todo @model @auth (
     rules: [
         { allow: public, provider: apiKey }
-        { allow: private, provider: iam }        
+        { allow: private, provider: iam }      
     ]
 ) {
   id: ID!
-  
+
   name: String
   description: String
 }
