@@ -5,7 +5,7 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 
-const https = require('https');
+//const https = require('https');
 const AWS = require("aws-sdk");
 const urlParse = require("url").URL;
 const axios = require('axios');
@@ -13,7 +13,7 @@ const appsyncUrl = process.env.API_TESTGRAPQL_GRAPHQLAPIENDPOINTOUTPUT;
 const region = process.env.REGION;
 const endpoint = new urlParse(appsyncUrl).hostname.toString();
 const graphqlQuery = require('./query.js').query;
-const apiKey = 'da2-gia6c7u2mjfironvvvt533q2di';
+const apiKey = process.env.API_KEY;
 
 exports.handler = async (event) => {
 

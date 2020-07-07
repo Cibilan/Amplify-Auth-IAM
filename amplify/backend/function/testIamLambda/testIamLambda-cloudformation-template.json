@@ -82,7 +82,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-amplifyauthiam-dev-193455-deployment",
-					"S3Key": "amplify-builds/testIamLambda-312f462b765a74683257-build.zip"
+					"S3Key": "amplify-builds/testIamLambda-31512f617448505a6838-build.zip"
 				}
 			}
 		},
