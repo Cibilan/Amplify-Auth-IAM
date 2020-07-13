@@ -13,8 +13,7 @@ const appsyncUrl = process.env.API_TESTGRAPQL_GRAPHQLAPIENDPOINTOUTPUT;
 const region = process.env.REGION;
 const endpoint = new urlParse(appsyncUrl).hostname.toString();
 const graphqlQuery = require('./query.js').query;
-const apiKey = process.env.API_KEY;
-
+const apiKey = process.env.API_KEY
 exports.handler = async (event) => {
 
     
